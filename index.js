@@ -1302,18 +1302,17 @@ async function getRandomFurry(interaction, embed) {
 async function createCustomPlug(interaction, embed) {
   const url = interaction.options.getString('аватарка');
   const name = interaction.options.getString('название');
-  const filename = `$${name.replace(/[^a-zA-Z0-9_\-\(\)]/g, '')}.gif`;
-  if (filename === '$.gif')
-    return interaction.editReply({
-      embeds: [embed.setTitle('Ошибка').setColor('Red').setDescription('Неверное название')]
-    });
+	if (!name.trim()) return interaction.editReply({
+		embeds: [embed.setTitle('Ошибка').setColor('Red').setDescription('Неверное название')]
+	});
+	const filename = `${name.replace(/[^a-zA-Z0-9_\-\(\)]/g, '')}`;
+
 
   console.log('Creating plug', filename);
   const plugPath = await plugger(filename, url);
   console.log('Plug created', filename);
 
   if (plugPath) {
-    fs.copyFileSync(plugPath, path.join(cwd(), '/plugs/', path.basename(filename)));
     return interaction.editReply({
       embeds: [
         embed
