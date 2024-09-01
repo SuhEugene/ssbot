@@ -1,0 +1,2 @@
+cd ../Paradise
+./make.sh

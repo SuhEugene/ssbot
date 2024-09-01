@@ -1,0 +1,29 @@
+{
+  "name": "ssbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^0.14.0",
+    "@discordjs/rest": "^0.5.0",
+    "@napi-rs/canvas": "^0.1.41",
+    "byond-fetch": "^1.0.2",
+    "discord-api-types": "^0.33.3",
+    "discord.js": "14",
+    "domutils": "^3.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "gifencoder": "^2.0.1",
+    "htmlparser2": "^8.0.2",
+    "mysql": "^2.18.1",
+    "node-fetch": "2",
+    "pg": "^8.11.5",
+    "ps-tree": "^1.2.0",
+    "upng-js": "^2.1.0",
+    "ws": "^8.8.0"
+  }
+}
