@@ -4,8 +4,7 @@ const {
   ActionRowBuilder,
   ButtonBuilder,
   Client,
-  GatewayIntentBits,
-  Interaction
+  GatewayIntentBits
 } = require('discord.js');
 const { roles, changelogChannel } = require('./config.json');
 const express = require('express');
@@ -22,6 +21,7 @@ let pats = {};
 
 const http = require('http');
 const WebSocket = require('ws');
+const { cwd } = require('process');
 
 console.log('\n--- Script started', Date.now(), '---\n');
 
@@ -1313,8 +1313,7 @@ async function createCustomPlug(interaction, embed) {
   console.log('Plug created', filename);
 
   if (plugPath) {
-    fs.copyFileSync(plugPath, path.join('/app/plugs/', path.basename(filename)));
-    fs.unlinkSync(plugPath);
+    fs.copyFileSync(plugPath, path.join(cwd(), '/plugs/', path.basename(filename)));
     return interaction.editReply({
       embeds: [
         embed
