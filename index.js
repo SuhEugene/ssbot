@@ -12,8 +12,9 @@ const cproc = require('child_process');
 const byondFetch = require('byond-fetch');
 const path = require('path');
 const fs = require('node:fs');
-const plugger = require('./plugger');
+// const plugger = require('./plugger');
 const { getRandomFurryPost, sanitizeTags } = require('./e621');
+const { Worker } = require('worker_threads');
 
 require('dotenv').config();
 
@@ -1309,32 +1310,36 @@ async function createCustomPlug(interaction, embed) {
 
 
   console.log('Creating plug', filename);
-  const plugPath = await plugger(filename, url);
-  console.log('Plug created', filename);
-
-  if (plugPath) {
-    return interaction.editReply({
-      embeds: [
-        embed
-          .setTitle('Гиф готова')
-          .setDescription(
-            `Скачать её можно по ссылке:\nhttps://download.wetskrell.ru/plugs/${path.basename(
-              plugPath
-            )}`
-          )
-          .setColor('Blurple')
-      ]
-    });
-  } else {
-    return interaction.editReply({
-      embeds: [
-        embed
-          .setTitle('Всё хуйня')
-          .setDescription(`Не знаю что произошло, но это пиздец`)
-          .setColor('DarkRed')
-      ]
-    });
-  }
+	const pluggerWorker = new Worker('./plugger_worker.js', {
+		workerData: { avaHash: filename, userUrl: url }
+	});
+	pluggerWorker.on('message', async (msg) => {
+		if (msg.filepath) {
+			console.log('Plug created', filename);
+			return interaction.editReply({
+				embeds: [
+					embed
+						.setTitle('Гиф готова')
+						.setDescription(
+							`Скачать её можно по ссылке:\nhttps://download.wetskrell.ru/plugs/${path.basename(
+								msg.filepath
+							)}`
+						)
+						.setColor('Blurple')
+				]
+			});
+		} else {
+			console.log("PLUGGER ERROR", msg);
+			return interaction.editReply({
+				embeds: [
+					embed
+						.setTitle('Всё хуйня')
+						.setDescription(`Не знаю что произошло, но это пиздец`)
+						.setColor('DarkRed')
+				]
+			});
+		}
+	});
 }
 
 const jobs = {
