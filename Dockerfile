@@ -7,6 +7,7 @@ RUN corepack enable
 
 FROM base AS deps
 RUN apk add --update --no-cache libc6-compat
+RUN apk add --update --no-cache pkgconf
 
 ENV PYTHONUNBUFFERED=1
 RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
