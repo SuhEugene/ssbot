@@ -210,6 +210,7 @@ client.on('ready', async () => {
   console.log('Logged in as', client.user.username);
   server.listen(8062, () => console.log('Listening *:8062', new Date()));
   connectToBay();
+	require('./servePlugs.js');
 });
 
 client.on('guildMemberRemove', async mbr => {
