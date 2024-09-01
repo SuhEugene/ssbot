@@ -1301,7 +1301,7 @@ async function getRandomFurry(interaction, embed) {
 async function createCustomPlug(interaction, embed) {
   const url = interaction.options.getString('аватарка');
   const name = interaction.options.getString('название');
-  const filename = `$${name.replace(/[^a-zA-Z0-9_-()]/g, '')}.gif`;
+  const filename = `$${name.replace(/[^a-zA-Z0-9_\-\(\)]/g, '')}.gif`;
   if (filename === '$.gif')
     return interaction.editReply({
       embeds: [embed.setTitle('Ошибка').setColor('Red').setDescription('Неверное название')]
