@@ -8,6 +8,8 @@ RUN corepack enable
 FROM base AS deps
 RUN apk add --update --no-cache libc6-compat
 RUN apk add --update --no-cache pkgconf
+# sudo apt-get install build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+RUN apk add --update --no-cache --virtual .gyp make build-base cairo-dev pango-dev libjpeg-turbo-dev giflib-dev librsvg-dev
 
 ENV PYTHONUNBUFFERED=1
 RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
