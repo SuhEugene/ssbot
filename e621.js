@@ -1,11 +1,7 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    user: 'e621_user',
-    host: 'localhost',
-    database: 'e621',
-    password: 'e621_pass',
-    port: 5432,
+    connectionString: process.env.POSTGRES_CONNECTION_STRING,
 });
 
 async function getRandomFurryPost(tags, rating = null) {
