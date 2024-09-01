@@ -9,21 +9,21 @@
   "dependencies": {
     "@discordjs/builders": "^0.14.0",
     "@discordjs/rest": "^0.5.0",
-    "@napi-rs/canvas": "^0.1.41",
-    "byond-fetch": "^1.0.2",
-    "discord-api-types": "^0.33.3",
-    "discord.js": "14",
-    "domutils": "^3.0.1",
+    "@napi-rs/canvas": "^0.1.54",
+    "byond-fetch": "^1.0.3",
+    "discord-api-types": "^0.33.5",
+    "discord.js": "^14.15.3",
+    "domutils": "^3.1.0",
     "dotenv": "^16.4.5",
-    "express": "^4.18.0",
-    "fluent-ffmpeg": "^2.1.2",
+    "express": "^4.19.2",
+    "fluent-ffmpeg": "^2.1.3",
     "gifencoder": "^2.0.1",
     "htmlparser2": "^8.0.2",
     "mysql": "^2.18.1",
-    "node-fetch": "2",
-    "pg": "^8.11.5",
+    "node-fetch": "^2.7.0",
+    "pg": "^8.12.0",
     "ps-tree": "^1.2.0",
     "upng-js": "^2.1.0",
-    "ws": "^8.8.0"
+    "ws": "^8.18.0"
   }
 }
