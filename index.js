@@ -1461,24 +1461,26 @@ client.on('interactionCreate', async interaction => {
         });
       console.log('Test', mbr?.avatar, mbr?.avatar && mbr.avatarURL());
       await interaction.deferReply();
-      const plugPath = await plugger(
-        mbr?.avatar || usr.avatar,
-        mbr?.avatar ? mbr.avatarURL() : usr.avatarURL()
-      );
-      console.log('got path', plugPath);
-      if (!plugPath)
-        return interaction.editReply({
-          content: 'У пользователя нет аватарки',
-          ephemeral: true
+
+      const pluggerWorker = new Worker('./plugger_worker.js', {
+        workerData: { avaHash: mbr?.avatar || usr.avatar, userUrl: mbr?.avatar ? mbr.avatarURL() : usr.avatarURL() }
+      });
+      pluggerWorker.on('message', async (msg) => {
+        console.log('got path', msg.filepath);
+        if (!msg.filepath)
+          return interaction.editReply({
+            content: 'У пользователя нет аватарки',
+            ephemeral: true
+          });
+        await interaction.editReply({
+          files: [
+            {
+              name: `plug-${usr.username}.gif`,
+              attachment: msg.filepath,
+              description: `A ${mbr?.nickname || usr.username} plugged`
+            }
+          ]
         });
-      await interaction.editReply({
-        files: [
-          {
-            name: `plug-${usr.username}.gif`,
-            attachment: plugPath,
-            description: `A ${mbr?.nickname || usr.username} plugged`
-          }
-        ]
       });
     } catch (e) {
       const r = Date.now();
