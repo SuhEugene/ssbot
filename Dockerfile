@@ -8,7 +8,7 @@ RUN corepack enable
 FROM base AS deps
 RUN apk add --update --no-cache libc6-compat
 RUN apk add --update --no-cache pkgconf
-RUN apk add --update --no-cache --virtual make build-base cairo-dev pango-dev libjpeg-turbo-dev giflib-dev librsvg-dev
+RUN apk add --update --no-cache make build-base cairo-dev pango-dev libjpeg-turbo-dev giflib-dev librsvg-dev
 RUN apk add --update --no-cache ffmpeg
 
 ENV PYTHONUNBUFFERED=1
