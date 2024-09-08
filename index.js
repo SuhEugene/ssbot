@@ -1422,7 +1422,7 @@ async function stopServer(interaction, embed) {
 }
 
 async function runIfHasRoles(roles, fun, interaction, embed) {
-  if (!interaction.member)
+  if (!interaction.member || !interaction.member.fetch)
     return await fun(interaction, embed);
 
   await interaction.member.fetch();
