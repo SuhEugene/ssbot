@@ -1321,9 +1321,9 @@ async function createCustomPlug(interaction, embed) {
 					embed
 						.setTitle('Гиф готова')
 						.setDescription(
-							`Скачать её можно по ссылке:\nhttps://download.wetskrell.ru/plugs/${path.basename(
+							`Ссылка для скачивания/просмотра:\nhttps://download.wetskrell.ru/plugs/${path.basename(
 								msg.filepath
-							)}`
+							)}\n\nПолный список: https://download.wetskrell.ru/plugs`
 						)
 						.setColor('Blurple')
 				]
