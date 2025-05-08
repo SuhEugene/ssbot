@@ -1098,8 +1098,8 @@ const zeroes = [
 ];
 async function getServerPlayers(interaction, embed) {
   const r = await byondFetch.fetchTopic({
-    ip: 'games-republic.ru',
-    port: 23410,
+    ip: '188.17.228.68',
+    port: 45879,
     topic: '?playerlist=2&format=json'
   });
   const randZero = zeroes[Math.floor(Math.random() * zeroes.length)];
