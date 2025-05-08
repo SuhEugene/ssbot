@@ -35,10 +35,10 @@ const client = new Client({
 });
 
 /*webhookClient.send({
-		content: 'Webhook test',
-		username: 'some-username',
-		avatarURL: 'https://i.imgur.com/AfFp7pu.png',
-		embeds: [embed],
+    content: 'Webhook test',
+    username: 'some-username',
+    avatarURL: 'https://i.imgur.com/AfFp7pu.png',
+    embeds: [embed],
 });*/
 
 const app = express();
@@ -89,7 +89,7 @@ wss.on('connection', sock => {
     let data = String(msg);
     try {
       data = JSON.parse(data);
-    } catch (e) {}
+    } catch (e) { }
 
     console.log('Received data', data);
     if (!data.id) return;
@@ -117,8 +117,8 @@ wss.on('connection', sock => {
             .setColor('DarkRed')
             .setDescription(
               `Сервер ${serverEmojis[data.id]} ` +
-                `**${serverNames[data.id]}** помер ` +
-                `<:sadge:967184409495224390>`
+              `**${serverNames[data.id]}** помер ` +
+              `<:sadge:967184409495224390>`
             )
         ]
       });
@@ -211,14 +211,14 @@ client.on('ready', async () => {
   console.log('Logged in as', client.user.username);
   server.listen(8062, () => console.log('Listening *:8062', new Date()));
   connectToBay();
-	require('./servePlugs.js');
+  require('./servePlugs.js');
 });
 
 client.on('guildMemberRemove', async mbr => {
   console.log(mbr.id, 'LEFT');
   (await client.channels.fetch('968191076252917831')).send(
     `Нас покинул <@!${mbr.user.id}> - ${mbr.user.username}` +
-      (mbr.nickname ? ` (${mbr.nicname})` : '')
+    (mbr.nickname ? ` (${mbr.nicname})` : '')
   );
 });
 
@@ -501,9 +501,9 @@ async function ckeyByDiscord(discordId, interaction, embed) {
           .setColor('Red')
           .setDescription(
             'Дискорд аккаунт не привязан\nДля привязки ' +
-              'зайдите на сервер, откройте вкладку `Special ' +
-              'verbs`, нажмите `Привязка Discord` и следуйте' +
-              ' дальнейшим инструкциям'
+            'зайдите на сервер, откройте вкладку `Special ' +
+            'verbs`, нажмите `Привязка Discord` и следуйте' +
+            ' дальнейшим инструкциям'
           )
       ]
     });
@@ -630,8 +630,7 @@ async function bayWhiteListToggle(interaction, embed) {
           .setTitle(':x: Успешно удалено')
           .setColor('DarkRed')
           .setDescription(
-            `Игрок \`${ckey}\` успешно удалён из вайтлиста расы **${
-              ALL_RACES[race] || '`' + race + '`'
+            `Игрок \`${ckey}\` успешно удалён из вайтлиста расы **${ALL_RACES[race] || '`' + race + '`'
             }**`
           )
       ]
@@ -652,8 +651,7 @@ async function bayWhiteListToggle(interaction, embed) {
           .setTitle(':white_check_mark: Успешно добавлено')
           .setColor('DarkGreen')
           .setDescription(
-            `Игрок \`${ckey}\` успешно добавлен в вайтлист расы **${
-              ALL_RACES[race] || '`' + race + '`'
+            `Игрок \`${ckey}\` успешно добавлен в вайтлист расы **${ALL_RACES[race] || '`' + race + '`'
             }**`
           )
       ]
@@ -708,8 +706,7 @@ async function bayAdminToggle(interaction, embed) {
             .setTitle(':x: Успешно удалено')
             .setColor('DarkRed')
             .setDescription(
-              `Игрок \`${ckey}\` успешно удалён из вайтлиста расы **${
-                ALL_RACES[race] || '`' + race + '`'
+              `Игрок \`${ckey}\` успешно удалён из вайтлиста расы **${ALL_RACES[race] || '`' + race + '`'
               }**`
             )
         ]
@@ -730,8 +727,7 @@ async function bayAdminToggle(interaction, embed) {
             .setTitle(':x: Успешно удалено')
             .setColor('DarkRed')
             .setDescription(
-              `Игрок \`${ckey}\` успешно удалён из вайтлиста расы **${
-                ALL_RACES[race] || '`' + race + '`'
+              `Игрок \`${ckey}\` успешно удалён из вайтлиста расы **${ALL_RACES[race] || '`' + race + '`'
               }**`
             )
         ]
@@ -763,8 +759,7 @@ async function bayAdminToggle(interaction, embed) {
           .setTitle(`:white_check_mark: Успешное ${isUp ? 'повышение' : 'понижение'}`)
           .setColor('DarkGreen')
           .setDescription(
-            `Игрок \`${ckey}\` успешно ${isUp ? 'повышен' : 'понижен'} до роли **${
-              role.bay
+            `Игрок \`${ckey}\` успешно ${isUp ? 'повышен' : 'понижен'} до роли **${role.bay
             }** и получает плашку <&${role.role}>`
           )
       ]
@@ -1007,45 +1002,58 @@ async function getServerData(interaction, embed) {
 }
 /*
 async function checkServersStatus (interaction, embed) {
-	let srv = {};
+  let srv = {};
 
-	for (let name in serverPorts) {
-		try {
-			const r = await byondFetch.fetchTopic({
-				ip: "127.0.0.1",
-				port: serverPorts[name],
-				topic: "?status=2&format=json"
-			});
-			srv[name] = JSON.parse(r);
-		}
-		catch (e) { srv[name] = {}; }
-	}
+  for (let name in serverPorts) {
+    try {
+      const r = await byondFetch.fetchTopic({
+        ip: "127.0.0.1",
+        port: serverPorts[name],
+        topic: "?status=2&format=json"
+      });
+      srv[name] = JSON.parse(r);
+    }
+    catch (e) { srv[name] = {}; }
+  }
 
-	const servers = [];
-	for (const id in srv) servers.push(formatServer(id, srv[id]));
+  const servers = [];
+  for (const id in srv) servers.push(formatServer(id, srv[id]));
 
-	return await interaction.editReply({ embeds: [
-		new EmbedBuilder().setTitle("Статус серверов")
-		.setColor("Blurple")
-		.setDescription(servers.join("\n\n"))
-	]});
+  return await interaction.editReply({ embeds: [
+    new EmbedBuilder().setTitle("Статус серверов")
+    .setColor("Blurple")
+    .setDescription(servers.join("\n\n"))
+  ]});
 }
 */
 async function checkServersStatus(interaction, embed) {
-  const r = await byondFetch.fetchTopic({
-    ip: 'games-republic.ru',
-    port: 23410,
-    topic: '?status=2&format=json'
-  });
-  const jsonData = JSON.parse(r);
-  return await interaction.editReply({
-    embeds: [
-      embed
-        .setTitle('Статус серверов')
-        .setColor('Blurple')
-        .setDescription(formatServer('para', jsonData))
-    ]
-  });
+  try {
+    const r = await byondFetch.fetchTopic({
+      ip: '188.17.228.68',
+      port: 45879,
+      topic: '?status=2&format=json'
+    });
+    const jsonData = JSON.parse(r);
+    return await interaction.editReply({
+      embeds: [
+        embed
+          .setTitle('Статус серверов')
+          .setColor('Blurple')
+          .setDescription(formatServer('para', jsonData))
+      ]
+    });
+  } catch (e) {
+    return await interaction.editReply({
+      embeds: [
+        embed
+          .setTitle('Ошибка получения статуса')
+          .setColor('Red')
+          .setDescription('```\n'+String(e)+'\n```')
+      ]
+    });
+
+  }
+  
 }
 
 const zeroes = [
@@ -1132,8 +1140,8 @@ async function checkServers(interaction, embed) {
         .setColor('Blurple')
         .setDescription(
           `:palm_tree: **Paradise:** ${servers.para ? 'Робит :+1:' : 'Спит :zzz:/ Дед :skull:'}\n` +
-            `:cheese: **Sierra:** ${servers.bay ? 'Робит :+1:' : 'Спит :zzz:/ Дед :skull:'}\n` +
-            `:mouse: **SkyRat:** ${servers.skyrat ? 'Робит :+1:' : 'Спит :zzz:/ Дед :skull:'}`
+          `:cheese: **Sierra:** ${servers.bay ? 'Робит :+1:' : 'Спит :zzz:/ Дед :skull:'}\n` +
+          `:mouse: **SkyRat:** ${servers.skyrat ? 'Робит :+1:' : 'Спит :zzz:/ Дед :skull:'}`
         )
     ]
   });
@@ -1157,8 +1165,8 @@ async function getServerIP(interaction, embed) {
             .setColor('Blurple')
             .setDescription(
               '**Ссылка:** <https://play.games-republic.ru/>\n' +
-                `**BYOND:** \`byond://games-republic.ru:${serverPorts[server]}\`\n` +
-                `**Alt:** \`byond://82.146.42.80:${serverPorts[server]}\``
+              `**BYOND:** \`byond://games-republic.ru:${serverPorts[server]}\`\n` +
+              `**Alt:** \`byond://82.146.42.80:${serverPorts[server]}\``
             )
         ]
       });
@@ -1175,7 +1183,7 @@ async function getServerIP(interaction, embed) {
     for (let name in serverPorts)
       links.push(
         `${serverEmojis[name]} **${serverNames[name]}:** ` +
-          `<byond://wetskrell.ru:${serverPorts[name]}>`
+        `<byond://wetskrell.ru:${serverPorts[name]}>`
       );
     return interaction.editReply({
       embeds: [embed.setTitle('Айпи серверов').setColor('Blurple').setDescription(links.join('\n'))]
@@ -1214,9 +1222,8 @@ async function giveMeetRole(interaction, embed) {
 }
 
 function getFurryUrl(post) {
-  return `https://static1.e621.net/data/${post.md5.slice(0, 2)}/${post.md5.slice(2, 4)}/${
-    post.md5
-  }.${post.file_ext}`;
+  return `https://static1.e621.net/data/${post.md5.slice(0, 2)}/${post.md5.slice(2, 4)}/${post.md5
+    }.${post.file_ext}`;
 }
 
 const furryUsersIds = {};
@@ -1239,8 +1246,7 @@ function getFurryPost(interaction, embed, post, count, query = [], rating = null
       embed
         .setTitle(`Фурря #${post.id}${count > 1 ? ' — ' + count : ''}`)
         .setDescription(
-          `**Теги:** ${tags.join(', ')}\n**Рейтинг:** ${post.score}\n**Категория:** ${
-            fullRating[post.rating]
+          `**Теги:** ${tags.join(', ')}\n**Рейтинг:** ${post.score}\n**Категория:** ${fullRating[post.rating]
           }`
         )
         .setImage(getFurryUrl(post))
@@ -1259,8 +1265,8 @@ async function sendNewFurryPost(interaction, embed, query, rating, count = 1) {
           .setTitle('Фурря не найдена')
           .setDescription(
             `Ни единого поста по запросу не нашлось.` +
-              (query ? `\nЗапрос: \`\`\`\n${query.join(' ')}\n\`\`\`` : '') +
-              (rating ? `\nКатегория: ${fullRating[rating]}` : '')
+            (query ? `\nЗапрос: \`\`\`\n${query.join(' ')}\n\`\`\`` : '') +
+            (rating ? `\nКатегория: ${fullRating[rating]}` : '')
           )
           .setColor('DarkRed')
       ]
@@ -1303,43 +1309,43 @@ async function getRandomFurry(interaction, embed) {
 async function createCustomPlug(interaction, embed) {
   const url = interaction.options.getString('аватарка');
   const name = interaction.options.getString('название');
-	if (!name.trim()) return interaction.editReply({
-		embeds: [embed.setTitle('Ошибка').setColor('Red').setDescription('Неверное название')]
-	});
-	const filename = `${name.replace(/[^a-zA-Z0-9_\-\(\)]/g, '')}`;
+  if (!name.trim()) return interaction.editReply({
+    embeds: [embed.setTitle('Ошибка').setColor('Red').setDescription('Неверное название')]
+  });
+  const filename = `${name.replace(/[^a-zA-Z0-9_\-\(\)]/g, '')}`;
 
 
   console.log('Creating plug', filename);
-	const pluggerWorker = new Worker('./plugger_worker.js', {
-		workerData: { avaHash: filename, userUrl: url }
-	});
-	pluggerWorker.on('message', async (msg) => {
-		if (msg.filepath) {
-			console.log('Plug created', filename);
-			return interaction.editReply({
-				embeds: [
-					embed
-						.setTitle('Гиф готова')
-						.setDescription(
-							`Ссылка для скачивания/просмотра:\nhttps://download.wetskrell.ru/plugs/${path.basename(
-								msg.filepath
-							)}\n\nПолный список: https://download.wetskrell.ru/plugs`
-						)
-						.setColor('Blurple')
-				]
-			});
-		} else {
-			console.log("PLUGGER ERROR", msg);
-			return interaction.editReply({
-				embeds: [
-					embed
-						.setTitle('Всё хуйня')
-						.setDescription(`Не знаю что произошло, но это пиздец`)
-						.setColor('DarkRed')
-				]
-			});
-		}
-	});
+  const pluggerWorker = new Worker('./plugger_worker.js', {
+    workerData: { avaHash: filename, userUrl: url }
+  });
+  pluggerWorker.on('message', async (msg) => {
+    if (msg.filepath) {
+      console.log('Plug created', filename);
+      return interaction.editReply({
+        embeds: [
+          embed
+            .setTitle('Гиф готова')
+            .setDescription(
+              `Ссылка для скачивания/просмотра:\nhttps://download.wetskrell.ru/plugs/${path.basename(
+                msg.filepath
+              )}\n\nПолный список: https://download.wetskrell.ru/plugs`
+            )
+            .setColor('Blurple')
+        ]
+      });
+    } else {
+      console.log("PLUGGER ERROR", msg);
+      return interaction.editReply({
+        embeds: [
+          embed
+            .setTitle('Всё хуйня')
+            .setDescription(`Не знаю что произошло, но это пиздец`)
+            .setColor('DarkRed')
+        ]
+      });
+    }
+  });
 }
 
 const jobs = {
@@ -1443,7 +1449,7 @@ client.on('interactionCreate', async interaction => {
   if (interaction.commandName.toLowerCase() == 'погладить') {
     try {
       pats = JSON.parse(fs.readFileSync('./pats.json')) || {};
-    } catch (e) {}
+    } catch (e) { }
     const usrId = interaction.targetUser.id;
     if (!pats[usrId])
       return interaction.reply({
